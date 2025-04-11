@@ -1,4 +1,5 @@
 # File name: user.py
+# Author: Iivari Anttila
 # Description: A class for a user
 
 class User:

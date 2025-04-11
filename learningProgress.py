@@ -2,10 +2,11 @@
 # Author: Iivari Anttila
 # Description: A class for a learning progress, where the level and due date of a word are stored
 import datetime
+from target import Target
 
 class LearningProgress:
-    def __init__(self, target, level:int, due_date:datetime.datetime):
-        self.__target = target
+    def __init__(self, target:Target, level:int, due_date:datetime.datetime):
+        self.__target:Target = target
         self.__level = level
         self.__due_date:datetime.datetime = due_date
 

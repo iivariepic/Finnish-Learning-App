@@ -10,7 +10,7 @@ VALUES(?, ?);
 CHANGE_USERNAME = """
 UPDATE User
 SET First_Name = ?
-WHERE UserID = ?
+WHERE User.ID = ?
 """
 
 CREATE_LEARNING_PROGRESS = """

@@ -1,6 +1,7 @@
 # File name: conjugation.py
 # Author: Iivari Anttila
 # Description: Conjugation for a word
+
 class Conjugation:
     def __init__(self,
                  finnish_translation:str,

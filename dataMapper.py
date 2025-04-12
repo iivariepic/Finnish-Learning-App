@@ -1,4 +1,4 @@
-# File name: databaseMapper.py
+# File name: dataMapper.py
 # Author: Iivari Anttila
 # Description: A class for mapping data to form classes from them
 from databaseQueryExecutor import DatabaseQueryExecutor

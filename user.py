@@ -5,7 +5,7 @@ from learningProgress import LearningProgress
 
 class User:
     def __init__(self, id:int, first_name:str,
-                 learning_progresses:list[LearningProgress]):
+                 learning_progresses:list[LearningProgress] = []):
         self.__id = id
         self.__first_name = first_name
         self.__learning_progresses:list = learning_progresses

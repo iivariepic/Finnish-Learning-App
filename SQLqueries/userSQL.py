@@ -1,4 +1,4 @@
-# File name: userSQÖ.py
+# File name: userSQL.py
 # Author: Iivari Anttila
 # Description: SQL Queries related to users
 

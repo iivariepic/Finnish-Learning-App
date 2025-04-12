@@ -2,6 +2,7 @@
 # Author: Iivari Anttila
 # Description: A class for handling the database, all database interactions go through this class
 import sqlite3
+from user import User
 
 class DatabaseHandler:
     def __init__(self, database_name = "Finnish_Language_App.sqlite3"):
@@ -24,7 +25,7 @@ class DatabaseHandler:
     def __connect(self):
         try:
             self.__connection = sqlite3.connect(self.database)
-            self.__cursor = connection.cursor()
+            self.__cursor = self.__connection.cursor()
         except sqlite3.Error as error:
             print(f"Database Connection Error: {error}")
 
@@ -35,7 +36,7 @@ class DatabaseHandler:
 
                 # Return rows if the QUERY was SELECT
                 if query.upper().startswith("SELECT", 0, 30):
-                    rows = cursor.fetchall()
+                    rows = self.cursor.fetchall()
                     return rows
 
                 # Commit only queries that are not SELECT
@@ -52,3 +53,26 @@ class DatabaseHandler:
         if self.connection:
             self.__connection.close()
             self.__cursor = None
+
+    def get_users(self):
+        from SQLqueries.getUsers import GET_USERS
+
+        self.__connect()
+        data = self.__execute_query(GET_USERS)
+        result = []
+        self.__close_connection()
+
+        for user in data:
+            result.append(User(user[0], user[1], []))
+
+        return result
+
+
+
+
+## Some testing
+if __name__ == "__main__":
+    db = DatabaseHandler()
+    users = db.get_users()
+
+    print(users[0].first_name)

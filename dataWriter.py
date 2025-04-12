@@ -38,3 +38,4 @@ class DataWriter:
             user.user_id,
             learning_progess.target.target_id
         ]
+        self.query_executor.execute_query(UPDATE_LEARNING_PROGRESS)

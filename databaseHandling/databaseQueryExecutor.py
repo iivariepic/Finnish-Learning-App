@@ -1,7 +1,8 @@
 # File name: databaseQueryExecutor.py
 # Author: Iivari Anttila
 # Description: A class for handling the execution of queries for the database
-from databaseConnectionHandler import DatabaseConnectionHandler
+from databaseHandling.databaseConnectionHandler import DatabaseConnectionHandler
+import sqlite3
 
 class DatabaseQueryExecutor:
     def __init__(self, connection_handler: DatabaseConnectionHandler):

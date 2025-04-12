@@ -1,7 +1,7 @@
 # File name: dataWriter.py
 # Author: Iivari Anttila
 # Description: A class for mapping data to form classes from them
-from databaseQueryExecutor import DatabaseQueryExecutor
+from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
 from user import User
 from target import Target
 from learningProgress import LearningProgress

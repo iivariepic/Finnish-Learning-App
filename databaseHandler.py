@@ -1,12 +1,11 @@
 # File name: databaseHandler.py
 # Author: Iivari Anttila
 # Description: A class for handling the database, all database interactions go through this class
-import sqlite3
 
-from databaseConnectionHandler import DatabaseConnectionHandler
-from databaseQueryExecutor import DatabaseQueryExecutor
-from dataMapper import DataMapper
-from dataWriter import DataWriter
+from databaseHandling.databaseConnectionHandler import DatabaseConnectionHandler
+from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
+from databaseHandling.dataMapper import DataMapper
+from databaseHandling.dataWriter import DataWriter
 from user import User
 from learningProgress import LearningProgress
 
@@ -79,6 +78,12 @@ class DatabaseHandler:
 ## Some testing
 if __name__ == "__main__":
     db = DatabaseHandler()
+
+    conflicting_user = User(1, "Iivari")
+    db.new_user(conflicting_user)
+    modification_to_user = User(1, "Iivari2")
+    db.change_user(modification_to_user)
+
     users = db.form_all_users()
     for user in users:
         print(user)
@@ -88,5 +93,5 @@ if __name__ == "__main__":
         unlearned = db.get_not_learned_targets(user.user_id)
         print(unlearned)
 
-    conflicting_user = User(1, "Iivari")
-    db.new_user(conflicting_user)
+    modification_to_user = User(1, "Iivari")
+    db.change_user(modification_to_user)

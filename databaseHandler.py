@@ -44,16 +44,6 @@ class DatabaseHandler:
         return user
 
     @connect_to_database
-    def get_not_learned_targets(self, user_id):
-        from SQLqueries.targetSQL import GET_NOT_LEARNED_TARGETS
-        targets = self.__query_executor.execute_query(GET_NOT_LEARNED_TARGETS, user_id)
-        result = []
-        for target in targets:
-            result.append(self.__data_mapper.map_target_from_id(target[0]))
-
-        return result
-
-    @connect_to_database
     def new_user(self, new_user:User):
         if self.__data_mapper.map_user_from_id(new_user.user_id) is None:
             self.__data_writer.add_user(new_user)
@@ -72,7 +62,25 @@ class DatabaseHandler:
     def change_learning_progress(self, user:User, learning_progress:LearningProgress):
         self.__data_writer.save_learning_progress_changes(user, learning_progress)
 
+    @connect_to_database
+    def get_not_learned_targets(self, user_id):
+        from SQLqueries.targetSQL import GET_NOT_LEARNED_TARGETS
+        targets = self.__query_executor.execute_query(GET_NOT_LEARNED_TARGETS, user_id)
+        result = []
+        for target in targets:
+            result.append(self.__data_mapper.map_target_from_id(target[0]))
 
+        return result
+
+    @connect_to_database
+    def get_next_user_id(self):
+        from SQLqueries.userSQL import NEXT_USER_ID
+        return self.__query_executor.execute_query(NEXT_USER_ID)[0][0] + 1
+
+    @connect_to_database
+    def get_next_target_id(self):
+        from SQLqueries.targetSQL import NEXT_TARGET_ID
+        return self.__query_executor.execute_query(NEXT_TARGET_ID)[0][0] + 1
 
 
 ## Some testing
@@ -95,3 +103,5 @@ if __name__ == "__main__":
 
     modification_to_user = User(1, "Iivari")
     db.change_user(modification_to_user)
+    print(db.get_next_user_id())
+    print(db.get_next_target_id())

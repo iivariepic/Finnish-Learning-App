@@ -12,3 +12,7 @@ GET_USER_LEARNING_PROGRESSES = """
 SELECT TargetID, Level, Next_Due_Date FROM Learning_Progress
 WHERE Learning_Progress.UserID = ?;
 """
+
+NEXT_USER_ID = """
+SELECT COUNT(DISTINCT ID) FROM User;
+"""

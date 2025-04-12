@@ -5,15 +5,24 @@
 class Target:
     def __init__(self,
                  english_translations:list[str],
-                 finnish_translations:list[str]):
+                 finnish_translations:list[str],
+                 target_id:str):
 
         self.__english_translations = english_translations
         self.__finnish_translations = finnish_translations
+        self.__id = target_id
 
     @property
     def english_translations(self):
         return self.__english_translations
 
     @property
-    def finnish_translation(self):
+    def finnish_translations(self):
         return self.__finnish_translations
+
+    @property
+    def target_id(self):
+        return self.__id
+
+    def __str__(self):
+        return f"{self.english_translations[0]} | {self.finnish_translations[0]}"

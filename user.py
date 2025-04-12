@@ -11,7 +11,7 @@ class User:
         self.__learning_progresses:list = learning_progresses
 
     @property
-    def id(self):
+    def user_id(self):
         return self.__id
 
     @property
@@ -21,3 +21,6 @@ class User:
     @property
     def learning_progresses(self):
         return self.__learning_progresses
+
+    def __str__(self):
+        return f"{self.user_id}: {self.first_name}"

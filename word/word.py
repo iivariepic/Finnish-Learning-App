@@ -2,16 +2,17 @@
 # Author: Iivari Anttila
 # Description: A class for a word
 from target import Target
-from conjugation import Conjugation
+from word.conjugation import Conjugation
 
 class Word(Target):
     def __init__(self,
                  english_translations:list[str],
                  finnish_translations:list[str],
+                 target_id:int,
                  part_of_speech:str,
                  initial_conjugations:list[Conjugation] = []):
 
-        super().__init__(english_translations, finnish_translations)
+        super().__init__(english_translations, finnish_translations, target_id)
         self.__part_of_speech = part_of_speech
         self.__conjugations = initial_conjugations
 

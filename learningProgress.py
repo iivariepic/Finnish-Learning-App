@@ -39,3 +39,6 @@ class LearningProgress:
         else:
             self.__level_down()
         self.__calculate_next_date()
+
+    def __str__(self):
+        return f"Level {self.level}, Target: {self.target}"

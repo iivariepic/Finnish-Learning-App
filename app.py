@@ -4,12 +4,14 @@
 
 import tkinter as tk
 from tkinter import ttk
+
+from GUI.newUser import NewUser
 from databaseHandler import DatabaseHandler
 from GUI.selectUser import SelectUser
 from GUI.styleConstants import setup_styles
 
 class App(tk.Tk):
-    ALL_FRAMES:list[ttk.Frame] = [SelectUser]
+    ALL_FRAMES:list[ttk.Frame] = [SelectUser, NewUser]
 
     def __init__(self):
         super().__init__()

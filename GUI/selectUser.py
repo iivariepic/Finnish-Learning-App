@@ -1,8 +1,6 @@
 # File name: selectUser.py
 # Author: Iivari Anttila
 # Description: Class for the GUI function to select a user
-from venv import create
-
 from GUI.styleConstants import *
 import tkinter as tk
 from tkinter import ttk
@@ -38,19 +36,21 @@ class SelectUser(ttk.Frame):
         self.button_previous = ttk.Button(
             navigation_frame,
             text = "←",
-            command=lambda: self.change_page_by(-1)
+            command=lambda: self.change_page_by(-1),
+            style="User.TButton"
         )
 
         self.button_middle_label = ttk.Label(
             navigation_frame,
-            text=f"{self.current_page + 1}/{len(self.filtered_users)//5 + 1}"
+            text=f"{self.current_page + 1}/{len(self.filtered_users)//5 + 1}",
+            font=CONTENT_FONT
         )
 
         self.button_next = ttk.Button(
             navigation_frame,
             text = "→",
-            command=lambda:
-            self.change_page_by(1)
+            command=lambda: self.change_page_by(1),
+            style="User.TButton"
         )
 
         self.button_previous.pack(side="left", padx=10)
@@ -70,6 +70,15 @@ class SelectUser(ttk.Frame):
         search_entry = ttk.Entry(search_frame, textvariable=self.search_var, style="Custom.TEntry")
         search_entry.pack()
         search_entry.bind("<KeyRelease>", self.on_search)
+
+        # Create user-button
+        button_create_user = ttk.Button(
+            self,
+            text="Create User",
+            command=lambda: self.create_user_button_pressed(),
+            style="User.TButton"
+        )
+        button_create_user.grid(row=5, pady=10)
 
 
     def create_user_button(self, user:User):
@@ -111,3 +120,6 @@ class SelectUser(ttk.Frame):
         self.filtered_users = [user for user in self.all_users if query in user.first_name.lower()]
         self.current_page = 0
         self.update_user_buttons()
+
+    def create_user_button_pressed(self):
+        self.controller.show_frame("NewUser")

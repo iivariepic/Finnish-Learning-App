@@ -17,9 +17,10 @@ GET_GRAMMAR_POINT_INFORMATION = "SELECT * FROM Grammar_Point WHERE TargetID = ?;
 GET_PHRASE_INFORMATION = "SELECT * FROM Phrase WHERE TargetID = ?;"
 
 GET_WORD_CONJUGATIONS = """
-SELECT Finnish_Translation, Conjugation_Type, Comparison_Degree, Tense 
+SELECT Finnish_Translation, Conjugation_Type, Comparison_Degree, Tense, GrammarID
 FROM Conjugation
 WHERE Conjugation.WordID = ?;"""
+
 
 GET_NOT_LEARNED_TARGETS = """
 SELECT Target.ID

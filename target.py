@@ -6,7 +6,7 @@ class Target:
     def __init__(self,
                  english_translations:list[str],
                  finnish_translations:list[str],
-                 target_id:str):
+                 target_id:int):
 
         self.__english_translations = english_translations
         self.__finnish_translations = finnish_translations

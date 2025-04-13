@@ -4,11 +4,12 @@
 from venv import create
 
 from GUI.styleConstants import *
+import tkinter as tk
 from tkinter import ttk
 from user import User
 
 class SelectUser(ttk.Frame):
-    USERS_PER_PAGE = 5
+    USERS_PER_PAGE = 4
 
     def __init__(self, parent, controller):
         super().__init__(parent)
@@ -34,17 +35,42 @@ class SelectUser(ttk.Frame):
         # "Page" navigation buttons
         navigation_frame = ttk.Frame(self)
         navigation_frame.grid(row=3, column=0, pady=10)
-        self.button_previous = ttk.Button(navigation_frame, text = "←")
+        self.button_previous = ttk.Button(
+            navigation_frame,
+            text = "←",
+            command=lambda: self.change_page_by(-1)
+        )
+
         self.button_middle_label = ttk.Label(
             navigation_frame,
             text=f"{self.current_page + 1}/{len(self.filtered_users)//5 + 1}"
         )
-        self.button_next = ttk.Button(navigation_frame, text = "→")
+
+        self.button_next = ttk.Button(
+            navigation_frame,
+            text = "→",
+            command=lambda:
+            self.change_page_by(1)
+        )
+
         self.button_previous.pack(side="left", padx=10)
         self.button_middle_label.pack(side="left", padx=10)
         self.button_next.pack(side="left", padx=10)
 
         self.update_user_buttons()
+
+        # Searching
+        search_frame = ttk.Frame(self)
+        search_frame.grid(row=4, column=0, pady=10)
+
+        search_label = ttk.Label(search_frame, text="Search for Username:", font=CONTENT_FONT)
+        search_label.pack()
+
+        self.search_var = tk.StringVar()
+        search_entry = ttk.Entry(search_frame, textvariable=self.search_var, style="Custom.TEntry")
+        search_entry.pack()
+        search_entry.bind("<KeyRelease>", self.on_search)
+
 
     def create_user_button(self, user:User):
         button = ttk.Button(
@@ -52,7 +78,7 @@ class SelectUser(ttk.Frame):
             text=f"{user.first_name}",
             style="User.TButton",
             command=lambda: self.user_button_pressed(user))
-        button.pack(pady=5, fill="x", padx=50)
+        button.pack(side="left", padx=10)
 
     def update_user_buttons(self):
         # Clear the old buttons
@@ -71,8 +97,17 @@ class SelectUser(ttk.Frame):
         self.button_middle_label.config(text=f"{self.current_page + 1}/{len(self.filtered_users)//5 + 1}")
         self.button_next.config(state="normal" if end < len(self.filtered_users) else "disabled")
 
+    def change_page_by(self, amount:int):
+        self.current_page += amount
+        self.update_user_buttons()
 
     def user_button_pressed(self, user:User):
         self.controller.current_user = user
         print(f"User selected: {self.controller.current_user.first_name}")
         return
+
+    def on_search(self, event=None):
+        query = self.search_var.get().lower()
+        self.filtered_users = [user for user in self.all_users if query in user.first_name.lower()]
+        self.current_page = 0
+        self.update_user_buttons()

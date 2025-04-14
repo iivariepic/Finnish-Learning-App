@@ -12,10 +12,10 @@ SELECT Finnish_Translation, isPrimary FROM Target_Finnish_Translation
 WHERE TargetID = ?
 """
 
-GET_WORD_INFORMATION = "SELECT * FROM Word WHERE TargetID = ?;"
+GET_WORD_INFORMATION = "SELECT Part_Of_Speech FROM Word WHERE TargetID = ?;"
 GET_GRAMMAR_POINT_INFORMATION = "SELECT * FROM Grammar_Point WHERE TargetID = ?;"
 GET_PHRASE_INFORMATION = """
-SELECT GrammarID, WordID
+SELECT WordID, GrammarID
 FROM Phrase 
 JOIN Phrase_Grammar ON Phrase.TargetID = Phrase_Grammar.PhraseID
 JOIN Phrase_Word ON Phrase.TargetID = Phrase_Word.PhraseID

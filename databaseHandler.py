@@ -74,7 +74,7 @@ class DatabaseHandler:
         return result
 
     @connect_to_database
-    def get_grammar_phrases(self, user:User, grammarpoint:GrammarPoint):
+    def get_grammar_phrases(self, grammarpoint:GrammarPoint):
         from SQLqueries.targetSQL import GET_GRAMMAR_PHRASES
         phrase_ids = self.__query_executor.execute_query(
             GET_GRAMMAR_PHRASES, grammarpoint.target_id

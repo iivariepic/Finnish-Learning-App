@@ -69,18 +69,20 @@ class DataMapper:
 
         if word_data:
             conjugations = self.get_word_conjugations(target_id)
-            return Word(english_translations, finnish_translations, target_id, word_data[0], conjugations)
+            return Word(english_translations, finnish_translations, target_id, word_data[0][0], conjugations)
 
         elif grammar_data:
             return GrammarPoint(english_translations, finnish_translations, target_id, grammar_data[0])
 
         elif phrase_data:
+            words = [self.map_target_from_id(data[0]) for data in phrase_data]
+            grammars = [self.map_target_from_id(data[1]) for data in phrase_data]
             return Phrase(
                 english_translations,
                 finnish_translations,
                 target_id,
-                self.map_target_from_id(phrase_data[0][0]),
-                self.map_target_from_id(phrase_data[0][1]),
+                words,
+                grammars,
             )
 
 

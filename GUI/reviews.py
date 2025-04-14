@@ -20,6 +20,9 @@ class Reviews(ttk.Frame):
         self.current_learning_progress = None
         self.current_target = None
         self.state = "guess" # guess or result
+        self.phrase = None
+        self.phrase_word = None
+        self.phrase_conjugation = None
 
         # Header (Usually finnish targetTypes)
         self.columnconfigure(0, weight=1)
@@ -91,13 +94,41 @@ class Reviews(ttk.Frame):
         self.current_target = self.remaining_reviews[0].target
         self.current_learning_progress = self.remaining_reviews[0]
 
+        # If target is word
         if isinstance(self.current_target, Word):
             self.header.config(text=f"{self.current_target.finnish_translations[0]}".capitalize())
             self.instructions.config(text="Type the English Translation")
 
+        # If target is grammar point
         elif isinstance(self.current_target, GrammarPoint):
-            pass
+            self.phrase = self.select_grammar_phrase(self.current_target)
 
+            # Get the answer word
+            for word in self.phrase.words:
+                for conjugation in word.conjugations:
+                    if conjugation.required_grammar.target_id == self.current_target.target_id:
+                        self.phrase_word = word
+                        self.phrase_conjugation = conjugation
+
+            # Set the header text
+            header_text = self.phrase.finnish_translations[0].replace(
+                self.phrase_conjugation.finnish_translation,
+                "__"
+            )
+            header_text += f" ({self.phrase_word.finnish_translations[0]})"
+            self.header.config(text=header_text)
+
+            # Set the instructions text
+            instructions_text = f"Conjugate {self.phrase_word} into"
+
+            if self.phrase_word.part_of_speech == "Adjective":
+                instructions_text += f" {phrase_conjugation.comparison_degree}"
+
+            elif self.phrase_word.part_of_speech == "Verb":
+                instructions_text += f" {self.phrase_conjugation.tense}"
+
+            instructions_text += f" {self.phrase_conjugation.type}"
+            self.instructions.config(text=instructions_text)
 
     def update_user(self):
         self.user = self.controller.current_user
@@ -135,9 +166,13 @@ class Reviews(ttk.Frame):
         else:
             self.header.config(style="ReviewWrong.TLabel")
             self.mistakes.add(self.current_learning_progress)
+            random.shuffle(self.remaining_reviews)
 
     def go_to_next(self):
         self.state = "guess"
+        self.phrase = None
+        self.phrase_word = None
+        self.phrase_conjugation = None
         self.submit_button.config(text="Submit")
         self.header.config(style="Custom.TLabel")
         self.set_target()
@@ -148,3 +183,28 @@ class Reviews(ttk.Frame):
                 if self.user_input.get().casefold() == translation.casefold():
                     return True
             return False
+
+        if isinstance(self.current_target, GrammarPoint):
+            translation = self.phrase_conjugation.finnish_translation
+            if self.user_input.get().casefold() == translation:
+                return True
+            return False
+
+    def select_grammar_phrase(self, grammar_point:GrammarPoint):
+        phrases = self.controller.database.get_grammar_phrases(grammar_point)
+
+        if not phrases:
+            return
+
+        phrases_with_user_words = []
+        for phrase in phrases:
+            for learning_progress in self.user.learning_progresses:
+                if learning_progress.target in phrase.words:
+                    phrases_with_user_words.append(phrase)
+
+        if phrases_with_user_words:
+            random.shuffle(phrases_with_user_words)
+            return phrases_with_user_words[0]
+
+        random.shuffle(phrases)
+        return phrases[0]

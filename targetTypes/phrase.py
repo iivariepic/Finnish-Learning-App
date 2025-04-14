@@ -20,5 +20,6 @@ class Phrase(Target):
     def words(self):
         return self.__words
 
+    @property
     def grammar(self):
         return self.__grammar

@@ -25,4 +25,4 @@ class Target:
         return self.__id
 
     def __str__(self):
-        return f"{self.english_translations[0]} | {self.finnish_translations[0]}"
+        return f"{self.english_translations[0]} ({self.finnish_translations[0]})"

@@ -34,11 +34,11 @@ class ModifyUser(ttk.Frame):
         old_name_frame.grid(row=2, column=0, pady=20)
 
         # Old first name indicator
-        name_label = ttk.Label(old_name_frame, text=f"User ID:", font=CONTENT_FONT)
-        name_label.pack(side="left", padx=20)
+        name_label = ttk.Label(old_name_frame, text=f"Current First Name:", font=CONTENT_FONT)
+        name_label.pack(side="left", padx=5)
 
         self.name_value_label = ttk.Label(old_name_frame, text="", font=CONTENT_FONT)
-        self.name_value_label.pack(side="left", padx=20)
+        self.name_value_label.pack(side="left", padx=5)
 
         # New first name frame
         new_name_frame = ttk.Frame(self)
@@ -57,14 +57,23 @@ class ModifyUser(ttk.Frame):
         button_frame = ttk.Frame(self)
         button_frame.grid(row=4, column=0, pady=20)
 
+        # Back button
+        back_button = ttk.Button(
+            button_frame,
+            text="Back",
+            style="Custom.TButton",
+            command=self.back
+        )
+        back_button.pack(side="left", padx=10)
+
         # Delete User Button
-        self.delete_user_button = ttk.Button(
+        delete_user_button = ttk.Button(
             button_frame,
             text="Delete User",
             style="Custom.TButton",
             command=self.delete_user
         )
-        self.delete_user_button.pack(side="left", padx=10)
+        delete_user_button.pack(side="left", padx=10)
 
         # Change Name Button
         self.change_name_button = ttk.Button(
@@ -100,7 +109,6 @@ class ModifyUser(ttk.Frame):
         self.id = user.user_id
         self.id_value_label.config(text=f"{self.id}")
 
-
     def delete_user(self):
         self.controller.current_user = None
         self.controller.database.delete_user_id(self.id)
@@ -110,3 +118,6 @@ class ModifyUser(ttk.Frame):
         select_page.refresh_users()
 
         self.controller.show_frame("SelectUser")
+
+    def back(self):
+        self.controller.show_frame("HomePage")

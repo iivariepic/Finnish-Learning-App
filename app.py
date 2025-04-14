@@ -4,7 +4,7 @@
 
 import tkinter as tk
 from tkinter import ttk
-
+import datetime
 
 from databaseHandler import DatabaseHandler
 from GUI.styleConstants import setup_styles
@@ -38,12 +38,19 @@ class App(tk.Tk):
 
         self.show_frame(list(self.frames.keys())[0])
 
-
-
     def show_frame(self, page_name):
         frame = self.frames[page_name]
         frame.tkraise()
 
+    def get_reviews(self):
+        assert self.current_user is not None
+        user = self.current_user
+        result = []
+        for learning_progress in user.learning_progresses:
+            if learning_progress.due_date <= datetime.date.today():
+                result.append(learning_progress)
+
+        return result
 
 # Testing:
 if __name__ == "__main__":

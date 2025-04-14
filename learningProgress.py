@@ -20,7 +20,7 @@ class LearningProgress:
 
     @property
     def due_date(self):
-        return self.__due_date.date()
+        return self.__due_date
 
     def __level_up(self):
         self.__level += 1

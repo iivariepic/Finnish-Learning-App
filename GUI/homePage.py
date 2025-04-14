@@ -73,7 +73,8 @@ class HomePage(ttk.Frame):
         self.update_review_amount()
 
     def update_review_amount(self):
-        print("Updating Review Amount")
+        reviews = self.controller.get_reviews()
+        self.review_amount.config(text=f"Reviews due: {len(reviews)}")
 
     def lessons_button_pressed(self):
         print("Going to Lessons")

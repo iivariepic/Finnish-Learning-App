@@ -8,6 +8,7 @@ from word.word import Word
 from user import User
 from target import Target
 from learningProgress import LearningProgress
+from datetime import datetime
 
 class DataMapper:
     def __init__(self, query_executor: DatabaseQueryExecutor):
@@ -34,8 +35,9 @@ class DataMapper:
         result = []
 
         for data in learning_data:
+            date = datetime.strptime(data[2], "%Y-%m-%d").date()
             target = self.map_target_from_id(data[0])
-            result.append(LearningProgress(target, data[1], data[2]))
+            result.append(LearningProgress(target, data[1], date))
 
         return result
 

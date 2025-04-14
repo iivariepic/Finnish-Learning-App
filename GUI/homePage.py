@@ -82,7 +82,11 @@ class HomePage(ttk.Frame):
         print("Going to Reviews")
 
     def modify_button_pressed(self):
-        print("Going to Modify User")
+        # Refresh the select user page
+        modify_page = self.controller.frames["ModifyUser"]
+        modify_page.update_user()
+
+        self.controller.show_frame("ModifyUser")
 
     def back_button_pressed(self):
         self.controller.current_user = None

@@ -23,3 +23,8 @@ UPDATE Learning_Progress
 SET Level = ?, Next_Due_Date = ?
 WHERE UserID = ? AND TargetID = ?;
 """
+
+DELETE_USER_ID = """
+DELETE FROM User
+WHERE User.ID = ?
+"""

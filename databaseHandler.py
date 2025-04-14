@@ -74,13 +74,16 @@ class DatabaseHandler:
 
     @connect_to_database
     def get_next_user_id(self):
-        from SQLqueries.userSQL import NEXT_USER_ID
-        return self.__query_executor.execute_query(NEXT_USER_ID)[0][0] + 1
+        i = 1
+        while True:
+            if self.__data_mapper.check_user_id(i):
+                return i
+            i += 1
 
     @connect_to_database
-    def get_next_target_id(self):
-        from SQLqueries.targetSQL import NEXT_TARGET_ID
-        return self.__query_executor.execute_query(NEXT_TARGET_ID)[0][0] + 1
+    def delete_user_id(self, user_id):
+        from SQLqueries.writeSQL import DELETE_USER_ID
+        self.__query_executor.execute_query(DELETE_USER_ID, user_id)
 
 
 ## Some testing

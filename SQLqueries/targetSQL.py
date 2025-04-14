@@ -30,7 +30,3 @@ LEFT JOIN Learning_Progress
     AND Learning_Progress.UserID = ?
 WHERE Learning_Progress.TargetID IS NULL;
 """
-
-NEXT_TARGET_ID = """
-SELECT COUNT(DISTINCT ID) FROM Target;
-"""

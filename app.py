@@ -11,9 +11,10 @@ from GUI.styleConstants import setup_styles
 from GUI.selectUser import SelectUser
 from GUI.newUser import NewUser
 from GUI.homePage import HomePage
+from GUI.modifyUser import ModifyUser
 
 class App(tk.Tk):
-    ALL_FRAMES:list[ttk.Frame] = [SelectUser, NewUser, HomePage]
+    ALL_FRAMES:list[ttk.Frame] = [SelectUser, NewUser, HomePage, ModifyUser]
 
     def __init__(self):
         super().__init__()

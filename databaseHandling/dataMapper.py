@@ -41,10 +41,9 @@ class DataMapper:
 
     def check_user_id(self, user_id):
         # Function to check if user id exists
-        from SQLqueries.userSQL import GET_USER_LEARNING_PROGRESSES
+        from SQLqueries.userSQL import GET_FIRST_NAME_FROM_ID
 
-        data = self.query_executor.execute_query(GET_USER_LEARNING_PROGRESSES, user_id)
-
+        data = self.query_executor.execute_query(GET_FIRST_NAME_FROM_ID, user_id)
         return data == []
 
     def map_target_from_id(self, target_id):

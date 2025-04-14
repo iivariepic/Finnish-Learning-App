@@ -68,6 +68,7 @@ class NewUser(ttk.Frame):
     def submit(self):
         new_user = User(self.next_id, self.username.get())
         self.controller.database.new_user(new_user)
+        self.username.set("")
 
         # Refresh the users in the SelectUser page
         select_user_page = self.controller.frames["SelectUser"]
@@ -76,4 +77,5 @@ class NewUser(ttk.Frame):
         self.controller.show_frame("SelectUser")
 
     def back(self):
+        self.username.set("")
         self.controller.show_frame("SelectUser")

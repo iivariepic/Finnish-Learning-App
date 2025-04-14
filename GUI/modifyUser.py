@@ -96,6 +96,8 @@ class ModifyUser(ttk.Frame):
         changed_user = User(self.id, self.username.get())
         self.controller.database.change_user(changed_user)
 
+        self.username.set("")
+
         # Update the selected user
         self.controller.current_user = changed_user
 
@@ -123,4 +125,5 @@ class ModifyUser(ttk.Frame):
         self.controller.show_frame("SelectUser")
 
     def back(self):
+        self.username.set("")
         self.controller.show_frame("HomePage")

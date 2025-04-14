@@ -48,6 +48,9 @@ class Reviews(ttk.Frame):
             style="Custom.TEntry")
         user_entry.grid(row=2, column=0, padx=20, sticky="ew")
 
+        # Bind enter to the submit answer function
+        user_entry.bind("<Return>", lambda event: self.submit_answer())
+
         # Button frame
         button_frame = ttk.Frame(self)
         button_frame.grid(row=3, column=0, pady=20)
@@ -69,6 +72,16 @@ class Reviews(ttk.Frame):
             command=self.submit_answer
         )
         self.submit_button.pack(side="left", padx=10)
+
+        # Correct Answer Button
+        self.correct_button = ttk.Button(
+            button_frame,
+            text="Correct Answer",
+            style="Custom.TButton",
+            command=self.correct_answer,
+            state="disabled"
+        )
+        self.correct_button.pack(side="left", padx=10)
 
 
     def save_progress(self):
@@ -155,9 +168,21 @@ class Reviews(ttk.Frame):
         elif self.state == "result":
             self.go_to_next()
 
+    def correct_answer(self):
+        header_text = self.header.cget("text")
+        if isinstance(self.current_target, Word):
+            header_text += f" = {self.get_correct_answer()[0].capitalize()}"
+
+        elif isinstance(self.current_target, GrammarPoint):
+            header_text = self.phrase.finnish_translations[0]
+
+        self.header.config(text=header_text)
+        self.correct_button.config(state="disabled")
+
     def result(self):
         self.state = "result"
         self.submit_button.config(text="Continue")
+        self.correct_button.config(state="enabled")
 
         if self.check_answer():
             self.header.config(style="ReviewCorrect.TLabel")
@@ -175,20 +200,19 @@ class Reviews(ttk.Frame):
         self.phrase_conjugation = None
         self.submit_button.config(text="Submit")
         self.header.config(style="Custom.TLabel")
+        self.correct_button.config(state="disabled")
         self.set_target()
 
     def check_answer(self):
+        return self.user_input.get().casefold() in self.get_correct_answer()
+
+    def get_correct_answer(self):
         if isinstance(self.current_target, Word):
-            for translation in self.current_target.english_translations:
-                if self.user_input.get().casefold() == translation.casefold():
-                    return True
-            return False
+            return self.current_target.english_translations
 
         if isinstance(self.current_target, GrammarPoint):
-            translation = self.phrase_conjugation.finnish_translation
-            if self.user_input.get().casefold() == translation:
-                return True
-            return False
+            return [self.phrase_conjugation.finnish_translation]
+
 
     def select_grammar_phrase(self, grammar_point:GrammarPoint):
         phrases = self.controller.database.get_grammar_phrases(grammar_point)

@@ -80,7 +80,7 @@ class SelectUser(ttk.Frame):
         )
         button_create_user.grid(row=5, pady=10)
 
-    def create_user_button(self, user:User):
+    def user_button(self, user:User):
         first_name = user.first_name
 
         if self.check_matching_first_names(user):
@@ -112,7 +112,7 @@ class SelectUser(ttk.Frame):
         page_users = self.filtered_users[start:end]
 
         for user in page_users:
-            self.create_user_button(user)
+            self.user_button(user)
 
         # Disable navigation buttons at page boundaries
         self.button_previous.config(state="normal" if self.current_page > 0 else "disabled")

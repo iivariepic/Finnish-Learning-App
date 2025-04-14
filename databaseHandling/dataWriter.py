@@ -5,6 +5,7 @@ from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
 from user import User
 from target import Target
 from learningProgress import LearningProgress
+from datetime import datetime
 
 class DataWriter:
     def __init__(self, query_executor: DatabaseQueryExecutor):
@@ -23,7 +24,7 @@ class DataWriter:
     def add_learning_progress(self, user:User, learning_progress:LearningProgress):
         from SQLqueries.writeSQL import CREATE_LEARNING_PROGRESS
         parameters = [
-            learning_progress.due_date,
+            learning_progress.due_date.strftime("%Y-%m-%d"),
             0,
             user.user_id,
             learning_progress.target.target_id
@@ -34,7 +35,7 @@ class DataWriter:
         from SQLqueries.writeSQL import UPDATE_LEARNING_PROGRESS
         parameters = [
             learning_progess.level,
-            learning_progess.due_date,
+            learning_progess.due_date.strftime("%Y-%m-%d"),
             user.user_id,
             learning_progess.target.target_id
         ]

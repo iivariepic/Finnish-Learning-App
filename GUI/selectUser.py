@@ -103,7 +103,9 @@ class SelectUser(ttk.Frame):
 
         # Disable navigation buttons at page boundaries
         self.button_previous.config(state="normal" if self.current_page > 0 else "disabled")
-        self.button_middle_label.config(text=f"{self.current_page + 1}/{len(self.filtered_users)//5 + 1}")
+        self.button_middle_label.config(
+            text=f"{self.current_page + 1}/{len(self.filtered_users)//self.USERS_PER_PAGE + 1}"
+        )
         self.button_next.config(state="normal" if end < len(self.filtered_users) else "disabled")
 
     def change_page_by(self, amount:int):
@@ -123,3 +125,9 @@ class SelectUser(ttk.Frame):
 
     def create_user_button_pressed(self):
         self.controller.show_frame("NewUser")
+
+    def refresh_users(self):
+        self.all_users = self.controller.database.form_all_users()
+        self.filtered_users = self.all_users
+        self.current_page = 0
+        self.update_user_buttons()

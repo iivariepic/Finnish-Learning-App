@@ -28,7 +28,7 @@ class NewUser(ttk.Frame):
         id_value_label.grid(row=1, column=1, sticky="w", padx=(5, 50), pady=5)
 
         # Username Entry
-        entry_label = ttk.Label(self, text="Enter Username:", font=CONTENT_FONT)
+        entry_label = ttk.Label(self, text="Enter First Name:", font=CONTENT_FONT)
         entry_label.grid(row=2, column=0, sticky="e", padx=(50, 5), pady=5)
 
         self.username = tk.StringVar()
@@ -53,4 +53,9 @@ class NewUser(ttk.Frame):
     def submit(self):
         new_user = User(self.next_id, self.username.get())
         self.controller.database.new_user(new_user)
+
+        # Refresh the users in the SelectUser page
+        select_user_page = self.controller.frames["SelectUser"]
+        select_user_page.refresh_users()
+
         self.controller.show_frame("SelectUser")

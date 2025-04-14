@@ -3,7 +3,7 @@
 # Description: SQL Queries related to writing data
 
 NEW_USER = """
-INSERT INTO User(UserID, First_Name)
+INSERT INTO User(ID, First_Name)
 VALUES(?, ?);
 """
 

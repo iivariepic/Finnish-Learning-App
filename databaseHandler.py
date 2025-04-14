@@ -45,7 +45,7 @@ class DatabaseHandler:
 
     @connect_to_database
     def new_user(self, new_user:User):
-        if self.__data_mapper.map_user_from_id(new_user.user_id) is None:
+        if self.__data_mapper.check_user_id(new_user.user_id):
             self.__data_writer.add_user(new_user)
         else:
             print("User with ID already exists")

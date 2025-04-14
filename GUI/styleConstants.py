@@ -9,5 +9,5 @@ HEADER_FONT = ("Cooper Black", 20)
 
 def setup_styles():
     style = ttk.Style()
-    style.configure("User.TButton", font=CONTENT_FONT, padding=10)
+    style.configure("Custom.TButton", font=CONTENT_FONT, padding=10)
     style.configure("Custom.TEntry", font=CONTENT_FONT, padding=2)

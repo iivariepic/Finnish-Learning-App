@@ -41,7 +41,7 @@ class NewUser(ttk.Frame):
             self,
             text="Create User",
             state="disabled",
-            style="User.TButton",
+            style="Custom.TButton",
             command=self.submit
         )
         self.button_submit.grid(row=5, column=0, columnspan=2, pady=40, sticky="ew", padx=150)

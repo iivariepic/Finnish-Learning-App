@@ -37,7 +37,7 @@ class SelectUser(ttk.Frame):
             navigation_frame,
             text = "←",
             command=lambda: self.change_page_by(-1),
-            style="User.TButton"
+            style="Custom.TButton"
         )
 
         self.button_middle_label = ttk.Label(
@@ -50,7 +50,7 @@ class SelectUser(ttk.Frame):
             navigation_frame,
             text = "→",
             command=lambda: self.change_page_by(1),
-            style="User.TButton"
+            style="Custom.TButton"
         )
 
         self.button_previous.pack(side="left", padx=10)
@@ -75,8 +75,8 @@ class SelectUser(ttk.Frame):
         button_create_user = ttk.Button(
             self,
             text="Create User",
-            command=lambda: self.create_user_button_pressed(),
-            style="User.TButton"
+            command=self.create_user_button_pressed,
+            style="Custom.TButton"
         )
         button_create_user.grid(row=5, pady=10)
 
@@ -89,7 +89,7 @@ class SelectUser(ttk.Frame):
         button = ttk.Button(
             self.button_container,
             text=f"{first_name}",
-            style="User.TButton",
+            style="Custom.TButton",
             command=lambda: self.user_button_pressed(user))
         button.pack(side="left", padx=10)
 
@@ -101,8 +101,6 @@ class SelectUser(ttk.Frame):
             if not is_user and same_name:
                 return True
         return False
-
-
 
     def update_user_buttons(self):
         # Clear the old buttons
@@ -129,8 +127,12 @@ class SelectUser(ttk.Frame):
 
     def user_button_pressed(self, user:User):
         self.controller.current_user = user
-        print(f"User selected: {self.controller.current_user.first_name}")
-        return
+
+        # Update the homepage
+        home_page = self.controller.frames["HomePage"]
+        home_page.update_user()
+
+        self.controller.show_frame("HomePage")
 
     def on_search(self, event=None):
         query = self.search_var.get().lower()

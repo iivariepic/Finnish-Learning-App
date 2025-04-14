@@ -14,7 +14,12 @@ WHERE TargetID = ?
 
 GET_WORD_INFORMATION = "SELECT * FROM Word WHERE TargetID = ?;"
 GET_GRAMMAR_POINT_INFORMATION = "SELECT * FROM Grammar_Point WHERE TargetID = ?;"
-GET_PHRASE_INFORMATION = "SELECT * FROM Phrase WHERE TargetID = ?;"
+GET_PHRASE_INFORMATION = """
+SELECT GrammarID, WordID
+FROM Phrase 
+JOIN Phrase_Grammar ON Phrase.TargetID = Phrase_Grammar.PhraseID
+JOIN Phrase_Word ON Phrase.TargetID = Phrase_Word.PhraseID
+WHERE Phrase.TargetID = ?"""
 
 GET_WORD_CONJUGATIONS = """
 SELECT Finnish_Translation, Conjugation_Type, Comparison_Degree, Tense, GrammarID
@@ -29,4 +34,11 @@ LEFT JOIN Learning_Progress
     ON Target.ID = Learning_Progress.TargetID 
     AND Learning_Progress.UserID = ?
 WHERE Learning_Progress.TargetID IS NULL;
+"""
+
+GET_GRAMMAR_PHRASES = """
+SELECT TargetID
+FROM Phrase 
+JOIN Phrase_Grammar ON Phrase.TargetID = Phrase_Grammar.PhraseID
+WHERE Phrase_Grammar.GrammarID = ?
 """

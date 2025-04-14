@@ -2,11 +2,11 @@
 # Author: Iivari Anttila
 # Description: A class for mapping data to form classes from them
 from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
-from grammarPoint.grammarPoint import GrammarPoint
-from word.conjugation import Conjugation
-from word.word import Word
+from targetTypes.grammarPoint import GrammarPoint
+from targetTypes.conjugation import Conjugation
+from targetTypes.phrase import Phrase
+from targetTypes.word import Word
 from user import User
-from target import Target
 from learningProgress import LearningProgress
 from datetime import datetime
 
@@ -73,6 +73,15 @@ class DataMapper:
 
         elif grammar_data:
             return GrammarPoint(english_translations, finnish_translations, target_id, grammar_data[0])
+
+        elif phrase_data:
+            return Phrase(
+                english_translations,
+                finnish_translations,
+                target_id,
+                self.map_target_from_id(phrase_data[0][0]),
+                self.map_target_from_id(phrase_data[0][1]),
+            )
 
 
     def get_word_conjugations(self, word_id) -> list[Conjugation]:

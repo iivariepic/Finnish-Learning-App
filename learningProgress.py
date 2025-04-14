@@ -1,6 +1,6 @@
 # File name: learningProgress.py
 # Author: Iivari Anttila
-# Description: A class for a learning progress, where the level and due date of a word are stored
+# Description: A class for a learning progress, where the level and due date of a targetTypes are stored
 import datetime
 from target import Target
 

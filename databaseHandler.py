@@ -6,6 +6,7 @@ from databaseHandling.databaseConnectionHandler import DatabaseConnectionHandler
 from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
 from databaseHandling.dataMapper import DataMapper
 from databaseHandling.dataWriter import DataWriter
+from targetTypes.grammarPoint import GrammarPoint
 from user import User
 from learningProgress import LearningProgress
 
@@ -63,12 +64,24 @@ class DatabaseHandler:
         self.__data_writer.save_learning_progress_changes(user, learning_progress)
 
     @connect_to_database
-    def get_not_learned_targets(self, user_id):
+    def get_not_learned_targets(self, user:User):
         from SQLqueries.targetSQL import GET_NOT_LEARNED_TARGETS
-        targets = self.__query_executor.execute_query(GET_NOT_LEARNED_TARGETS, user_id)
+        targets = self.__query_executor.execute_query(GET_NOT_LEARNED_TARGETS, user.user_id)
         result = []
         for target in targets:
             result.append(self.__data_mapper.map_target_from_id(target[0]))
+
+        return result
+
+    @connect_to_database
+    def get_grammar_phrases(self, user:User, grammarpoint:GrammarPoint):
+        from SQLqueries.targetSQL import GET_GRAMMAR_PHRASES
+        phrase_ids = self.__query_executor.execute_query(
+            GET_GRAMMAR_PHRASES, grammarpoint.target_id
+        )
+        result = []
+        for phrase_id in phrase_ids:
+            result.append(self.__data_mapper.map_target_from_id(phrase_id[0]))
 
         return result
 
@@ -101,10 +114,9 @@ if __name__ == "__main__":
         for learning_progress in user.learning_progresses:
             print(learning_progress)
 
-        unlearned = db.get_not_learned_targets(user.user_id)
+        unlearned = db.get_not_learned_targets(user)
         print(unlearned)
 
     modification_to_user = User(1, "Iivari")
     db.change_user(modification_to_user)
     print(db.get_next_user_id())
-    print(db.get_next_target_id())

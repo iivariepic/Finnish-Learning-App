@@ -1,8 +1,8 @@
-# File name: word.py
+# File name: targetTypes.py
 # Author: Iivari Anttila
-# Description: A class for a word
+# Description: A class for a targetTypes
 from target import Target
-from word.conjugation import Conjugation
+from targetTypes.conjugation import Conjugation
 
 class Word(Target):
     def __init__(self,

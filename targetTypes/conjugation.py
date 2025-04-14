@@ -1,20 +1,20 @@
 # File name: conjugation.py
 # Author: Iivari Anttila
-# Description: Conjugation for a word
-from grammarPoint.grammarPoint import GrammarPoint
+# Description: Conjugation for a targetTypes
+from targetTypes.grammarPoint import GrammarPoint
 from user import User
 
 class Conjugation:
     def __init__(self,
                  finnish_translation:str,
-                 type:str,
+                 conjugation_type:str,
                  comparison_degree:str = None,
                  tense:str = None,
                  required_grammar:GrammarPoint = None,
-    ):
+                 ):
         self.__finnish_translation = finnish_translation
         # Type means something like ("Third person", or "Inessive")
-        self.__type = type
+        self.__type = conjugation_type
         # Comparison Degree is only for ajectives and means something like ("comparative", or "superlative")
         self.__comparison_degree = comparison_degree
         # Tense is only for verbs and means something like ("past", "present")

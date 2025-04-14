@@ -5,11 +5,8 @@
 from GUI.styleConstants import *
 import tkinter as tk
 from tkinter import ttk
-from user import User
-from target import Target
-from grammarPoint.grammarPoint import GrammarPoint
-from word.word import Word
-from word.conjugation import Conjugation
+from targetTypes.grammarPoint import GrammarPoint
+from targetTypes.word import Word
 import random
 
 class Reviews(ttk.Frame):
@@ -24,7 +21,7 @@ class Reviews(ttk.Frame):
         self.current_target = None
         self.state = "guess" # guess or result
 
-        # Header (Usually finnish word)
+        # Header (Usually finnish targetTypes)
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.header = ttk.Label(self, text="Placeholder", font=HEADER_FONT, anchor="center")
@@ -97,6 +94,9 @@ class Reviews(ttk.Frame):
         if isinstance(self.current_target, Word):
             self.header.config(text=f"{self.current_target.finnish_translations[0]}".capitalize())
             self.instructions.config(text="Type the English Translation")
+
+        elif isinstance(self.current_target, GrammarPoint):
+            pass
 
 
     def update_user(self):

@@ -11,26 +11,29 @@ class NewUser(ttk.Frame):
         super().__init__(parent)
         self.controller = controller
 
-        self.columnconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(4, weight=1)
 
         # Header
         header = ttk.Label(self, text="Create a New User", font=HEADER_FONT, anchor="center")
-        header.grid(row=0, column=0, pady=20, sticky="ew")
+        header.grid(row=0, column=0, columnspan=2, pady=(30, 20), sticky="ew")
 
         # User ID indicator
         self.next_id = self.controller.database.get_next_user_id()
-        id_label = ttk.Label(self, text=f"User ID:")
-        id_label.grid(row=1, column=0)
-        id_value_label = ttk.Label(self, text=f"{self.next_id}")
-        id_value_label.grid(row=1, column=1)
+        id_label = ttk.Label(self, text=f"User ID:", font=CONTENT_FONT)
+        id_label.grid(row=1, column=0, sticky="e", padx=(50, 5), pady=5)
+
+        id_value_label = ttk.Label(self, text=f"{self.next_id}", font=CONTENT_FONT)
+        id_value_label.grid(row=1, column=1, sticky="w", padx=(5, 50), pady=5)
 
         # Username Entry
-        entry_label = ttk.Label(self, text="Enter Username:")
-        entry_label.grid(row=2, column=0)
+        entry_label = ttk.Label(self, text="Enter Username:", font=CONTENT_FONT)
+        entry_label.grid(row=2, column=0, sticky="e", padx=(50, 5), pady=5)
 
         self.username = tk.StringVar()
         username_entry = ttk.Entry(self, textvariable=self.username, style="Custom.TEntry")
-        username_entry.grid(row=2, column=1)
+        username_entry.grid(row=2, column=1, sticky="w", padx=(5, 50), pady=5)
         username_entry.bind("<KeyRelease>", self.check_entry)
 
         # Submit Button
@@ -39,11 +42,11 @@ class NewUser(ttk.Frame):
             text="Create User",
             state="disabled",
             style="User.TButton",
-            command=lambda: self.submit
+            command=self.submit
         )
-        self.button_submit.grid(row=3, column=0, pady=30)
+        self.button_submit.grid(row=5, column=0, columnspan=2, pady=40, sticky="ew", padx=150)
 
-    def check_entry(self):
+    def check_entry(self, event=None):
         entry = self.username.get()
         self.button_submit.config(state="normal" if 0 < len(entry) < 50 else "disabled")
 

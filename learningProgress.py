@@ -27,11 +27,13 @@ class LearningProgress:
 
     def __level_down(self):
         self.__level -= 1
+        if self.__level < 0:
+            self.__level = 0
 
     def __calculate_next_date(self):
         today = datetime.datetime.now()
         new_interval = 2 ** self.level
-        self.__due_date = today + datetime.timedelta(days=new_interval)
+        self.__due_date = (today + datetime.timedelta(days=new_interval)).date()
 
     def update_progress(self, correct:bool):
         if correct:

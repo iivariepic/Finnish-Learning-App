@@ -36,13 +36,13 @@ class HomePage(ttk.Frame):
         lessons_button.pack(side="left", padx=10)
 
         # Reviews-button
-        reviews_button = ttk.Button(
+        self.reviews_button = ttk.Button(
             upper_button_frame,
             text="Reviews",
             style="Custom.TButton",
             command=self.reviews_button_pressed
         )
-        reviews_button.pack(side="left", padx=10)
+        self.reviews_button.pack(side="left", padx=10)
 
         # Review Amount indicator
         self.review_amount = ttk.Label(self, text="Reviews Due:", font=CONTENT_FONT, anchor="center")
@@ -75,15 +75,20 @@ class HomePage(ttk.Frame):
     def update_review_amount(self):
         reviews = self.controller.get_reviews()
         self.review_amount.config(text=f"Reviews due: {len(reviews)}")
+        self.reviews_button.config(state="disabled" if len(reviews) == 0 else "enabled")
 
     def lessons_button_pressed(self):
         print("Going to Lessons")
 
     def reviews_button_pressed(self):
-        print("Going to Reviews")
+        # Update the user in the reviews page
+        reviews_page = self.controller.frames["Reviews"]
+        reviews_page.update_user()
+
+        self.controller.show_frame("Reviews")
 
     def modify_button_pressed(self):
-        # Refresh the select user page
+        # Update the user in the modify page
         modify_page = self.controller.frames["ModifyUser"]
         modify_page.update_user()
 

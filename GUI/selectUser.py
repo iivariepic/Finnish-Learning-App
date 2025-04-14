@@ -80,14 +80,29 @@ class SelectUser(ttk.Frame):
         )
         button_create_user.grid(row=5, pady=10)
 
-
     def create_user_button(self, user:User):
+        first_name = user.first_name
+
+        if self.check_matching_first_names(user):
+            first_name += f" ({user.user_id})"
+
         button = ttk.Button(
             self.button_container,
-            text=f"{user.first_name}",
+            text=f"{first_name}",
             style="User.TButton",
             command=lambda: self.user_button_pressed(user))
         button.pack(side="left", padx=10)
+
+    def check_matching_first_names(self, user:User):
+        for other_user in self.all_users:
+            is_user = other_user == user
+            same_name = other_user.first_name == user.first_name
+
+            if not is_user and same_name:
+                return True
+        return False
+
+
 
     def update_user_buttons(self):
         # Clear the old buttons

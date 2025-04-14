@@ -36,15 +36,30 @@ class NewUser(ttk.Frame):
         username_entry.grid(row=2, column=1, sticky="w", padx=(5, 50), pady=5)
         username_entry.bind("<KeyRelease>", self.check_entry)
 
+        # Button Frame
+        button_frame = ttk.Frame(self)
+        button_frame.grid(row=3, column=0, columnspan=2, pady=20)
+
+        # Back Button
+        button_back = ttk.Button(
+            button_frame,
+            text="Back",
+            style="Custom.TButton",
+            command=self.back
+        )
+        button_back.pack(side="left", padx=20)
+
         # Submit Button
         self.button_submit = ttk.Button(
-            self,
+            button_frame,
             text="Create User",
             state="disabled",
             style="Custom.TButton",
             command=self.submit
         )
-        self.button_submit.grid(row=5, column=0, columnspan=2, pady=40, sticky="ew", padx=150)
+        self.button_submit.pack(side="left", padx=20)
+
+
 
     def check_entry(self, event=None):
         entry = self.username.get()
@@ -58,4 +73,7 @@ class NewUser(ttk.Frame):
         select_user_page = self.controller.frames["SelectUser"]
         select_user_page.refresh_users()
 
+        self.controller.show_frame("SelectUser")
+
+    def back(self):
         self.controller.show_frame("SelectUser")

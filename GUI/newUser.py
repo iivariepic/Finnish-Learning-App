@@ -70,10 +70,6 @@ class NewUser(ttk.Frame):
         self.controller.database.new_user(new_user)
         self.username.set("")
 
-        # Refresh the users in the SelectUser page
-        select_user_page = self.controller.frames["SelectUser"]
-        select_user_page.refresh_users()
-
         self.controller.show_frame("SelectUser")
 
     def back(self):

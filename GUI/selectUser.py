@@ -127,11 +127,6 @@ class SelectUser(ttk.Frame):
 
     def user_button_pressed(self, user:User):
         self.controller.current_user = user
-
-        # Update the homepage
-        home_page = self.controller.frames["HomePage"]
-        home_page.update_user()
-
         self.controller.show_frame("HomePage")
 
     def on_search(self, event=None):
@@ -143,7 +138,7 @@ class SelectUser(ttk.Frame):
     def create_user_button_pressed(self):
         self.controller.show_frame("NewUser")
 
-    def refresh_users(self):
+    def update_user(self):
         self.all_users = self.controller.database.form_all_users()
         self.filtered_users = self.all_users
         self.current_page = 0

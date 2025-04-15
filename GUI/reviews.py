@@ -157,10 +157,6 @@ class Reviews(ttk.Frame):
     def back(self):
         self.save_progress()
 
-        # Update the homepage
-        home_page = self.controller.frames["HomePage"]
-        home_page.update_user()
-
         self.controller.show_frame("HomePage")
 
     def submit_answer(self):

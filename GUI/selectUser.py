@@ -3,6 +3,7 @@
 # Description: Class for the GUI function to select a user
 from GUI.styleConstants import *
 import tkinter as tk
+import math
 from tkinter import ttk
 from user import User
 
@@ -117,9 +118,15 @@ class SelectUser(ttk.Frame):
         # Disable navigation buttons at page boundaries
         self.button_previous.config(state="normal" if self.current_page > 0 else "disabled")
         self.button_middle_label.config(
-            text=f"{self.current_page + 1}/{len(self.filtered_users)//self.USERS_PER_PAGE + 1}"
+            text=f"{self.current_page + 1}/{math.ceil(len(self.filtered_users)/self.USERS_PER_PAGE)}"
         )
         self.button_next.config(state="normal" if end < len(self.filtered_users) else "disabled")
+
+        # Set the label to 0 if there are no users
+        if len(self.filtered_users) == 0:
+            self.button_middle_label.config(
+                text=f"0/0"
+            )
 
     def change_page_by(self, amount:int):
         self.current_page += amount

@@ -94,9 +94,13 @@ class DatabaseHandler:
             i += 1
 
     @connect_to_database
-    def delete_user_id(self, user_id):
-        from SQLqueries.writeSQL import DELETE_USER_ID
-        self.__query_executor.execute_query(DELETE_USER_ID, user_id)
+    def delete_user(self, user:User):
+        from SQLqueries.writeSQL import (
+            DELETE_USER_ID,
+            DELETE_USER_LEARNING_PROGRESSES
+        )
+        self.__query_executor.execute_query(DELETE_USER_ID, user.user_id)
+        self.__query_executor.execute_query(DELETE_USER_LEARNING_PROGRESSES, user.user_id)
 
 
 ## Some testing

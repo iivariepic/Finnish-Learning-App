@@ -28,3 +28,8 @@ DELETE_USER_ID = """
 DELETE FROM User
 WHERE User.ID = ?
 """
+
+DELETE_USER_LEARNING_PROGRESSES = """
+DELETE FROM Learning_Progress
+WHERE Learning_Progress.UserID = ?;
+"""

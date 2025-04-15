@@ -24,21 +24,21 @@ class SelectUser(ttk.Frame):
         title.grid(row=0, column=0, pady=20, sticky="ew")
 
         # "Please select a user"-text
-        please_select = ttk.Label(self, text="Please Select A User", font=CONTENT_FONT, anchor="center")
+        please_select = ttk.Label(self, text="Please Select A Profile", font=CONTENT_FONT, anchor="center")
         please_select.grid(row=1, column=0, pady=20, sticky="ew")
 
         # User buttons
         self.button_container = ttk.Frame(self)
-        self.button_container.grid(row=2, column=0, pady=10)
+        self.button_container.grid(row=2, column=0, pady=20, sticky="")
 
         # "Page" navigation buttons
         navigation_frame = ttk.Frame(self)
-        navigation_frame.grid(row=3, column=0, pady=10)
+        navigation_frame.grid(row=3, column=0, pady=20)
         self.button_previous = ttk.Button(
             navigation_frame,
             text = "←",
             command=lambda: self.change_page_by(-1),
-            style="Custom.TButton"
+            style="Arrow.TButton"
         )
 
         self.button_middle_label = ttk.Label(
@@ -51,7 +51,7 @@ class SelectUser(ttk.Frame):
             navigation_frame,
             text = "→",
             command=lambda: self.change_page_by(1),
-            style="Custom.TButton"
+            style="Arrow.TButton"
         )
 
         self.button_previous.pack(side="left", padx=10)
@@ -62,24 +62,20 @@ class SelectUser(ttk.Frame):
 
         # Searching
         search_frame = ttk.Frame(self)
-        search_frame.grid(row=4, column=0, pady=10)
+        search_frame.grid(row=4, column=0, pady=(0, 5), padx=20, sticky="ew")
 
-        search_label = ttk.Label(search_frame, text="Search for Username:", font=CONTENT_FONT)
-        search_label.pack()
+        search_label = ttk.Label(
+            search_frame,
+            text="Search:",
+            style="Custom.TLabel"
+        )
+        search_label.pack(side="left", padx=10)
 
+        # Search Entry
         self.search_var = tk.StringVar()
         search_entry = ttk.Entry(search_frame, textvariable=self.search_var, style="Custom.TEntry")
-        search_entry.pack()
+        search_entry.pack(side="left", fill=tk.X, expand=1, padx=(0, 40))
         search_entry.bind("<KeyRelease>", self.on_search)
-
-        # Create user-button
-        button_create_user = ttk.Button(
-            self,
-            text="Create User",
-            command=self.create_user_button_pressed,
-            style="Custom.TButton"
-        )
-        button_create_user.grid(row=5, pady=10)
 
     def user_button(self, user:User):
         first_name = user.first_name
@@ -93,6 +89,15 @@ class SelectUser(ttk.Frame):
             style="Custom.TButton",
             command=lambda: self.user_button_pressed(user))
         button.pack(side="left", padx=10)
+
+    def create_user_button(self):
+        button_create_user = ttk.Button(
+            self.button_container,
+            text="Create New",
+            command=self.create_user_button_pressed,
+            style="Custom.TButton"
+        )
+        button_create_user.pack(side="left", padx=10)
 
     def check_matching_first_names(self, user:User):
         for other_user in self.all_users:
@@ -115,17 +120,21 @@ class SelectUser(ttk.Frame):
         for user in page_users:
             self.user_button(user)
 
+        # Add a "Create User" button to the end of the list
+        if len(page_users) < 4:
+            self.create_user_button()
+
         # Disable navigation buttons at page boundaries
         self.button_previous.config(state="normal" if self.current_page > 0 else "disabled")
         self.button_middle_label.config(
-            text=f"{self.current_page + 1}/{math.ceil(len(self.filtered_users)/self.USERS_PER_PAGE)}"
+            text=f"{self.current_page + 1}/{math.ceil((len(self.filtered_users) + 1)/self.USERS_PER_PAGE)}"
         )
-        self.button_next.config(state="normal" if end < len(self.filtered_users) else "disabled")
+        self.button_next.config(state="normal" if end < len(self.filtered_users) + 1 else "disabled")
 
-        # Set the label to 0 if there are no users
+        # Set the label to 1 if there are no users
         if len(self.filtered_users) == 0:
             self.button_middle_label.config(
-                text=f"0/0"
+                text=f"1/1"
             )
 
     def change_page_by(self, amount:int):
@@ -146,6 +155,7 @@ class SelectUser(ttk.Frame):
         self.controller.show_frame("NewUser")
 
     def update_user(self):
+        self.search_var.set("")
         self.all_users = self.controller.database.form_all_users()
         self.filtered_users = self.all_users
         self.current_page = 0

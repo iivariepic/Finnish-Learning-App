@@ -62,7 +62,7 @@ class AllLessons(ttk.Frame):
             navigation_frame,
             text="←",
             command=lambda: self.change_page_by(-1),
-            style="Custom.TButton"
+            style="Arrow.TButton"
         )
 
         self.button_middle_label = ttk.Label(
@@ -75,7 +75,7 @@ class AllLessons(ttk.Frame):
             navigation_frame,
             text="→",
             command=lambda: self.change_page_by(1),
-            style="Custom.TButton"
+            style="Arrow.TButton"
         )
 
         self.button_previous.pack(side="left", padx=10)
@@ -84,7 +84,7 @@ class AllLessons(ttk.Frame):
 
         # Searching
         search_frame = ttk.Frame(self)
-        search_frame.grid(row=4, column=0, pady=(0, 5), padx=20, sticky="ew")
+        search_frame.grid(row=4, column=0, pady=20, padx=20, sticky="ew")
 
         search_label = ttk.Label(
             search_frame,

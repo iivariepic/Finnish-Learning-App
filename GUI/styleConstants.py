@@ -16,6 +16,7 @@ BLUE = "#66CEDD"
 def setup_styles():
     style = ttk.Style()
     style.configure("Custom.TButton", font=CONTENT_FONT, padding=10)
+    style.configure("Arrow.TButton", font=CONTENT_FONT, padding=5)
     style.configure("Custom.TEntry", font=CONTENT_FONT, padding=2)
     style.configure("Custom.TLabel", font=CONTENT_FONT)
     style.configure("ReviewCorrect.TLabel", font=CONTENT_FONT, background=CORRECT_COLOR)

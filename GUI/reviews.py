@@ -114,34 +114,37 @@ class Reviews(ttk.Frame):
 
         # If target is grammar point
         elif isinstance(self.current_target, GrammarPoint):
-            self.phrase = self.select_grammar_phrase(self.current_target)
+            self.__set_grammar()
 
-            # Get the answer word
-            for word in self.phrase.words:
-                for conjugation in word.conjugations:
-                    if conjugation.required_grammar.target_id == self.current_target.target_id:
-                        self.phrase_word = word
-                        self.phrase_conjugation = conjugation
+    def __set_grammar(self):
+        self.phrase = self.select_grammar_phrase(self.current_target)
 
-            # Set the header text
-            header_text = self.phrase.finnish_translations[0].replace(
-                self.phrase_conjugation.finnish_translation,
-                "__"
-            )
-            header_text += f" ({self.phrase_word.finnish_translations[0]})"
-            self.header.config(text=header_text)
+        # Get the answer word
+        for word in self.phrase.words:
+            for conjugation in word.conjugations:
+                if conjugation.required_grammar.target_id == self.current_target.target_id:
+                    self.phrase_word = word
+                    self.phrase_conjugation = conjugation
 
-            # Set the instructions text
-            instructions_text = f"Conjugate {self.phrase_word} into"
+        # Set the header text
+        header_text = self.phrase.finnish_translations[0].replace(
+            self.phrase_conjugation.finnish_translation,
+            "__"
+        )
+        header_text += f" ({self.phrase_word.finnish_translations[0]})"
+        self.header.config(text=header_text)
 
-            if self.phrase_word.part_of_speech == "Adjective":
-                instructions_text += f" {phrase_conjugation.comparison_degree}"
+        # Set the instructions text
+        instructions_text = f"Conjugate {self.phrase_word} into"
 
-            elif self.phrase_word.part_of_speech == "Verb":
-                instructions_text += f" {self.phrase_conjugation.tense}"
+        if self.phrase_word.part_of_speech == "Adjective":
+            instructions_text += f" {phrase_conjugation.comparison_degree}"
 
-            instructions_text += f" {self.phrase_conjugation.type}"
-            self.instructions.config(text=instructions_text)
+        elif self.phrase_word.part_of_speech == "Verb":
+            instructions_text += f" {self.phrase_conjugation.tense}"
+
+        instructions_text += f" {self.phrase_conjugation.type}"
+        self.instructions.config(text=instructions_text)
 
     def update_user(self):
         self.user = self.controller.current_user

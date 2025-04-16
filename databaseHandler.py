@@ -47,10 +47,7 @@ class DatabaseHandler:
 
     @connect_to_database
     def new_user(self, new_user:User):
-        if self.__data_mapper.check_user_id(new_user.user_id):
-            self.__data_writer.add_user(new_user)
-        else:
-            print("User with ID already exists")
+        self.__data_writer.add_user(new_user)
 
     @connect_to_database
     def change_user(self, changed_user:User):
@@ -76,15 +73,7 @@ class DatabaseHandler:
 
     @connect_to_database
     def get_grammar_phrases(self, grammarpoint:GrammarPoint):
-        from SQLqueries.targetSQL import GET_GRAMMAR_PHRASES
-        phrase_ids = self.__query_executor.execute_query(
-            GET_GRAMMAR_PHRASES, grammarpoint.target_id
-        )
-        result = []
-        for phrase_id in phrase_ids:
-            result.append(self.__data_mapper.map_target_from_id(phrase_id[0]))
-
-        return result
+        return self.__data_mapper.get_grammar_phrases(grammarpoint.target_id)
 
     @connect_to_database
     def get_word_phrases(self, word:Word):

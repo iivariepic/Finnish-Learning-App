@@ -122,6 +122,17 @@ class DataMapper:
 
         return result
 
+    def get_grammar_phrases(self, grammar_id):
+        from SQLqueries.targetSQL import GET_GRAMMAR_PHRASES
+        phrase_ids = self.query_executor.execute_query(
+            GET_GRAMMAR_PHRASES, grammar_id
+        )
+        result = []
+        for phrase_id in phrase_ids:
+            result.append(self.map_target_from_id(phrase_id[0]))
+
+        return result
+
 
     def map_conjugation_from_id(self, conjugation_id):
         from SQLqueries.targetSQL import GET_CONJUGATION

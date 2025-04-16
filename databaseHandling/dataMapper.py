@@ -111,6 +111,17 @@ class DataMapper:
 
         return conjugation_objects
 
+    def get_word_phrases(self, word_id):
+        from SQLqueries.targetSQL import GET_WORD_PHRASES
+        phrase_ids = self.query_executor.execute_query(
+            GET_WORD_PHRASES, word_id
+        )
+        result = []
+        for phrase_id in phrase_ids:
+            result.append(self.map_target_from_id(phrase_id[0]))
+
+        return result
+
 
     def map_conjugation_from_id(self, conjugation_id):
         from SQLqueries.targetSQL import GET_CONJUGATION

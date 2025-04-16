@@ -22,5 +22,8 @@ class User:
     def learning_progresses(self):
         return self.__learning_progresses
 
+    def add_learning_progress(self, learning_progress:LearningProgress):
+        self.__learning_progresses.append(learning_progress)
+
     def __str__(self):
         return f"{self.user_id}: {self.first_name}"

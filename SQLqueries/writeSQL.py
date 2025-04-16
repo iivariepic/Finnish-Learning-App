@@ -15,7 +15,7 @@ WHERE User.ID = ?
 
 CREATE_LEARNING_PROGRESS = """
 INSERT INTO Learning_Progress(Next_Due_Date, Level, UserID, TargetID)
-VALUES(?, ?, ?, ?, ?)
+VALUES(?, ?, ?, ?)
 """
 
 UPDATE_LEARNING_PROGRESS = """

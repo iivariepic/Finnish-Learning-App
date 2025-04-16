@@ -7,6 +7,7 @@ from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
 from databaseHandling.dataMapper import DataMapper
 from databaseHandling.dataWriter import DataWriter
 from targetTypes.grammarPoint import GrammarPoint
+from targetTypes.word import Word
 from user import User
 from learningProgress import LearningProgress
 
@@ -86,6 +87,22 @@ class DatabaseHandler:
         return result
 
     @connect_to_database
+    def get_word_phrases(self, word:Word):
+        from SQLqueries.targetSQL import GET_WORD_PHRASES
+        phrase_ids = self.__query_executor.execute_query(
+            GET_WORD_PHRASES, word.target_id
+        )
+        result = []
+        for phrase_id in phrase_ids:
+            result.append(self.__data_mapper.map_target_from_id(phrase_id[0]))
+
+        return result
+
+    @connect_to_database
+    def get_grammar_conjugations(self, grammarpoint:GrammarPoint):
+        return self.__data_mapper.get_grammar_conjugations(grammarpoint.target_id)
+
+    @connect_to_database
     def get_next_user_id(self):
         i = 1
         while True:
@@ -95,12 +112,7 @@ class DatabaseHandler:
 
     @connect_to_database
     def delete_user(self, user:User):
-        from SQLqueries.writeSQL import (
-            DELETE_USER_ID,
-            DELETE_USER_LEARNING_PROGRESSES
-        )
-        self.__query_executor.execute_query(DELETE_USER_ID, user.user_id)
-        self.__query_executor.execute_query(DELETE_USER_LEARNING_PROGRESSES, user.user_id)
+        self.__data_writer.delete_user(user)
 
 
 ## Some testing

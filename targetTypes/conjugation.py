@@ -53,3 +53,13 @@ class Conjugation:
                 return True
 
         return False
+
+    def english_string(self) -> str:
+        result = "("
+        if self.tense:
+            result += self.tense.capitalize() + ", "
+        if self.comparison_degree:
+            result += self.comparison_degree.capitalize() + ", "
+        result += self.type.capitalize()
+        result += ") "
+        return result

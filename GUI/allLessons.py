@@ -156,6 +156,15 @@ class AllLessons(ttk.Frame):
 
             target_index += 1
 
+        # Display text if nothing is found
+        if len(page_targets) == 0:
+            label = ttk.Label(
+                self.target_button_row1,
+                text="Nothing found here!",
+                style="CustomBold.TLabel"
+            )
+            label.pack()
+
         # Disable navigation buttons at page boundaries
         self.button_previous.config(state="normal" if self.current_page > 0 else "disabled")
         self.button_middle_label.config(

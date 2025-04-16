@@ -40,3 +40,11 @@ class DataWriter:
             learning_progess.target.target_id
         ]
         self.query_executor.execute_query(UPDATE_LEARNING_PROGRESS, parameters)
+
+    def delete_user(self, user:User):
+        from SQLqueries.writeSQL import (
+            DELETE_USER_ID,
+            DELETE_USER_LEARNING_PROGRESSES
+        )
+        self.query_executor.execute_query(DELETE_USER_ID, user.user_id)
+        self.query_executor.execute_query(DELETE_USER_LEARNING_PROGRESSES, user.user_id)

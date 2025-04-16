@@ -24,5 +24,31 @@ class Target:
     def target_id(self):
         return self.__id
 
+    def finnish_translations_string(self):
+        result = ""
+        first_loop: bool = True
+        for translation in self.finnish_translations:
+            if not first_loop:
+                result += ", "
+            else:
+                first_loop = False
+
+            result += translation.capitalize()
+
+        return result
+
+    def english_translations_string(self):
+        result = ""
+        first_loop: bool = True
+        for translation in self.english_translations:
+            if not first_loop:
+                result += ", "
+            else:
+                first_loop = False
+
+            result += translation.capitalize()
+
+        return result
+
     def __str__(self):
         return f"{self.english_translations[0]} ({self.finnish_translations[0]})"

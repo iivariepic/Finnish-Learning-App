@@ -72,7 +72,8 @@ class DataMapper:
             return Word(english_translations, finnish_translations, target_id, word_data[0][0], conjugations)
 
         elif grammar_data:
-            return GrammarPoint(english_translations, finnish_translations, target_id, grammar_data[0])
+            teaching_text = grammar_data[0][0].replace("\\n", "\n")
+            return GrammarPoint(english_translations, finnish_translations, target_id, teaching_text)
 
         elif phrase_data:
             words = [self.map_target_from_id(data[0]) for data in phrase_data]
@@ -85,25 +86,45 @@ class DataMapper:
                 grammars,
             )
 
-
     def get_word_conjugations(self, word_id) -> list[Conjugation]:
         from SQLqueries.targetSQL import GET_WORD_CONJUGATIONS
         conjugation_data = self.query_executor.execute_query(GET_WORD_CONJUGATIONS, word_id)
         conjugation_objects = []
 
-        for row in conjugation_data:
-            finnish_translation, conjugation_type, comparison_degree, tense, grammar_id = row
-
-            required_grammar = None
-            if grammar_id is not None:
-                required_grammar = self.map_target_from_id(grammar_id)
-
-            conjugation_objects.append(Conjugation(
-                finnish_translation = finnish_translation,
-                conjugation_type = conjugation_type,
-                comparison_degree = comparison_degree,
-                tense = tense,
-                required_grammar = required_grammar,
-            ))
+        for conjugation_id in conjugation_data:
+            conjugation_objects.append(
+                self.map_conjugation_from_id(conjugation_id)
+            )
 
         return conjugation_objects
+
+    def get_grammar_conjugations(self, grammar_id) -> list[Conjugation]:
+        from SQLqueries.targetSQL import GET_GRAMMAR_CONJUGATIONS
+        conjugation_data = self.query_executor.execute_query(GET_GRAMMAR_CONJUGATIONS, grammar_id)
+        conjugation_objects = []
+
+        for conjugation_id in conjugation_data:
+            conjugation_objects.append(
+                self.map_conjugation_from_id(conjugation_id)
+            )
+
+        return conjugation_objects
+
+
+    def map_conjugation_from_id(self, conjugation_id):
+        from SQLqueries.targetSQL import GET_CONJUGATION
+        data = self.query_executor.execute_query(GET_CONJUGATION, conjugation_id)
+
+        finnish_translation, conjugation_type, comparison_degree, tense, grammar_id = data[0]
+
+        required_grammar = None
+        if grammar_id is not None:
+            required_grammar = self.map_target_from_id(grammar_id)
+
+        return Conjugation(
+            finnish_translation=finnish_translation,
+            conjugation_type=conjugation_type,
+            comparison_degree=comparison_degree,
+            tense=tense,
+            required_grammar=required_grammar,
+        )

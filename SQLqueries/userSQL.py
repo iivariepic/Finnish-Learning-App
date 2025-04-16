@@ -12,3 +12,5 @@ GET_USER_LEARNING_PROGRESSES = """
 SELECT TargetID, Level, Next_Due_Date FROM Learning_Progress
 WHERE Learning_Progress.UserID = ?;
 """
+
+GET_NEXT_ID = "SELECT seq FROM sqlite_sequence WHERE name='User'"

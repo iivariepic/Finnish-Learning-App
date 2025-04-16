@@ -104,11 +104,8 @@ class DatabaseHandler:
 
     @connect_to_database
     def get_next_user_id(self):
-        i = 1
-        while True:
-            if self.__data_mapper.check_user_id(i):
-                return i
-            i += 1
+        return self.__data_mapper.next_user_id()
+
 
     @connect_to_database
     def delete_user(self, user:User):

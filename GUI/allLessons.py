@@ -194,7 +194,8 @@ class AllLessons(ttk.Frame):
         self.update_target_buttons()
 
     def target_button_pressed(self, target):
-        print(target)
+        self.controller.current_lesson = target
+        self.controller.show_frame("Lesson")
 
     def back(self):
         self.controller.show_frame("HomePage")

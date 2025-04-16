@@ -3,9 +3,9 @@
 # Description: File to store constants of the style like font
 from tkinter import ttk
 
-
 CONTENT_FONT = ("Cooper Std Black", 12)
-HEADER_FONT = ("Cooper Black", 20)
+SUBHEADER_FONT = ("Cooper Std Black", 16)
+HEADER_FONT = ("Cooper Std Black", 20)
 
 CORRECT_COLOR = "#9DF298"
 WRONG_COLOR = "#F67577"
@@ -21,5 +21,8 @@ def setup_styles():
     style.configure("Custom.TLabel", font=CONTENT_FONT)
     style.configure("ReviewCorrect.TLabel", font=CONTENT_FONT, background=CORRECT_COLOR)
     style.configure("ReviewWrong.TLabel", font=CONTENT_FONT, background=WRONG_COLOR)
+    style.configure("LessonHeader.TLabel", font=HEADER_FONT, background=LIGHT_BLUE)
+    style.configure("LessonSubHeader.TLabel", font=SUBHEADER_FONT, background=LIGHT_BLUE)
+    style.configure("LessonHeader.TFrame", background=LIGHT_BLUE)
     style.configure("Target.TButton", font=CONTENT_FONT, padding=5, background=LIGHT_BLUE)
     style.map("Target.TButton", background=[('active', BLUE)])

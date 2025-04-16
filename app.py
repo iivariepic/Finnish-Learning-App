@@ -16,11 +16,12 @@ from GUI.homePage import HomePage
 from GUI.modifyUser import ModifyUser
 from GUI.reviews import Reviews
 from GUI.allLessons import AllLessons
+from GUI.lesson import Lesson
 
 
 class App(tk.Tk):
     ALL_FRAMES:list[ttk.Frame] = [
-        SelectUser, NewUser, HomePage, ModifyUser, Reviews, AllLessons
+        SelectUser, NewUser, HomePage, ModifyUser, Reviews, AllLessons, Lesson
     ]
 
     def __init__(self):
@@ -30,6 +31,7 @@ class App(tk.Tk):
         self.title("Finnish Learning App")
         self.geometry("600x400")
         self.current_frame_name = ""
+        self.current_lesson = None
 
         # Make on_window_close run every time window is closed
         self.protocol("WM_DELETE_WINDOW", self.on_window_close)

@@ -1,6 +1,6 @@
 # File name: target.py
 # Author: Iivari Anttila
-# Description: A class for a target (a thing that can be learned in this app, like a vocabulary targetTypes or a grammar point)
+# Description: A class for a target (a thing that can be learned in this app, like a vocabulary or a grammar point)
 
 class Target:
     def __init__(self,

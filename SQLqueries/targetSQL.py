@@ -60,3 +60,9 @@ SELECT Finnish_Translation, Conjugation_Type, Comparison_Degree, Tense, GrammarI
 FROM Conjugation
 WHERE Conjugation.ID = ?
 """
+
+GET_CONJUGATION_WORD = """
+SELECT Conjugation.WordID
+FROM Conjugation
+WHERE Conjugation.ID = ?
+"""

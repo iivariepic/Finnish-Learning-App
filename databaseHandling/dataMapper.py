@@ -145,9 +145,15 @@ class DataMapper:
             required_grammar = self.map_target_from_id(grammar_id)
 
         return Conjugation(
+            conjugation_id=conjugation_id,
             finnish_translation=finnish_translation,
             conjugation_type=conjugation_type,
             comparison_degree=comparison_degree,
             tense=tense,
             required_grammar=required_grammar,
         )
+
+    def get_conjugation_word(self, conjugation_id):
+        from SQLqueries.targetSQL import GET_CONJUGATION_WORD
+        data = self.query_executor.execute_query(GET_CONJUGATION_WORD, conjugation_id)
+        return self.map_target_from_id(data[0][0])

@@ -6,12 +6,14 @@ from user import User
 
 class Conjugation:
     def __init__(self,
+                 conjugation_id:int,
                  finnish_translation:str,
                  conjugation_type:str,
                  comparison_degree:str = None,
                  tense:str = None,
                  required_grammar:GrammarPoint = None,
                  ):
+        self.__conjugation_id = conjugation_id
         self.__finnish_translation = finnish_translation
         # Type means something like ("Third person", or "Inessive")
         self.__type = conjugation_type
@@ -22,6 +24,9 @@ class Conjugation:
         # Required Grammar Point is used if the user needs to learn a grammar point before using the Conjugation
         self.__required_grammar = required_grammar
 
+    @property
+    def conjugation_id(self):
+        return self.__conjugation_id
 
     @property
     def finnish_translation(self):

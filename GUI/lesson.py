@@ -158,7 +158,7 @@ class Lesson(ttk.Frame):
 
     def submit(self):
         new_learning_progress = LearningProgress(
-            self.target, 0, datetime.datetime.now().date()
+            self.target, -1, datetime.datetime.now().date()
         )
         self.controller.database.new_learning_progress(
             self.controller.current_user, new_learning_progress
@@ -256,14 +256,16 @@ class Lesson(ttk.Frame):
         for conjugation in conjugations[:3]:
             finnish_translation = ttk.Label(
                 self.content_frame,
-                text=conjugation.finnish_translation,
+                text=conjugation.finnish_translation.capitalize(),
                 style="CustomBold.TLabel"
             )
             finnish_translation.pack(side="top", pady=(10, 5), fill="x")
 
             english_explanation = ttk.Label(
                 self.content_frame,
-                text=conjugation.english_string(),
+                text=self.controller.database.get_conjugation_word(
+                    conjugation
+                ),
                 style="Custom.TLabel"
             )
             english_explanation.pack(side="top", fill="x")

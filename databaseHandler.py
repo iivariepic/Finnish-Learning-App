@@ -6,6 +6,7 @@ from databaseHandling.databaseConnectionHandler import DatabaseConnectionHandler
 from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
 from databaseHandling.dataMapper import DataMapper
 from databaseHandling.dataWriter import DataWriter
+from targetTypes.conjugation import Conjugation
 from targetTypes.grammarPoint import GrammarPoint
 from targetTypes.word import Word
 from user import User
@@ -87,6 +88,9 @@ class DatabaseHandler:
     def get_next_user_id(self):
         return self.__data_mapper.next_user_id()
 
+    @connect_to_database
+    def get_conjugation_word(self, conjugation:Conjugation):
+        return self.__data_mapper.get_conjugation_word(conjugation.conjugation_id)
 
     @connect_to_database
     def delete_user(self, user:User):

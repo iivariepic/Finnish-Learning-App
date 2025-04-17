@@ -51,4 +51,4 @@ class Target:
         return result
 
     def __str__(self):
-        return f"{self.english_translations[0]} ({self.finnish_translations[0]})"
+        return f"{self.english_translations[0].capitalize()} ({self.finnish_translations[0].capitalize()})"

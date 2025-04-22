@@ -87,7 +87,7 @@ class ModifyUser(ttk.Frame):
 
     def check_entry(self, event=None):
         entry = self.username.get()
-        self.change_name_button.config(state="normal" if 0 < len(entry) < 50 else "disabled")
+        self.change_name_button.config(state="normal" if 0 < len(entry) < 20 else "disabled")
         self.change_name_button.config(
             state="disabled" if self.controller.current_user.first_name == entry else "normal"
         )

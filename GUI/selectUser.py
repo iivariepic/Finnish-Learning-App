@@ -80,6 +80,9 @@ class SelectUser(ttk.Frame):
     def user_button(self, user:User):
         first_name = user.first_name
 
+        if len(first_name) > 8:
+            first_name = first_name[:8] + "..."
+
         if self.check_matching_first_names(user):
             first_name += f" ({user.user_id})"
 

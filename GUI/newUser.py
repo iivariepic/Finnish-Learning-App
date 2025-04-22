@@ -65,7 +65,7 @@ class NewUser(ttk.Frame):
 
     def check_entry(self, event=None):
         entry = self.username.get()
-        self.button_submit.config(state="normal" if 0 < len(entry) < 50 else "disabled")
+        self.button_submit.config(state="normal" if 0 < len(entry) < 20 else "disabled")
 
     def submit(self):
         new_user = User(self.next_id, self.username.get())

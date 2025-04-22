@@ -81,7 +81,7 @@ class SelectUser(ttk.Frame):
         first_name = user.first_name
 
         if len(first_name) > 8:
-            first_name = first_name[:8] + "..."
+            first_name = first_name[:8].strip() + "..."
 
         if self.check_matching_first_names(user):
             first_name += f" ({user.user_id})"

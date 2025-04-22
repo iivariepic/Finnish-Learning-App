@@ -27,3 +27,19 @@ class Word(Target):
     def add_conjugation(self, conjugation:Conjugation):
         if conjugation.type not in self.conjugations:
             self.__conjugations.append(conjugation)
+
+    def conjugations_string(self):
+        result = ""
+        first_loop: bool = True
+        for conjugation in self.conjugations:
+            if not first_loop:
+                result += "\n"
+            else:
+                first_loop = False
+
+            result = conjugation.english_string()
+            result += conjugation.finnish_translation.capitalize()
+
+        if result == "":
+            result = "No conjugations available"
+        return result

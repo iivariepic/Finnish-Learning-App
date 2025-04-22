@@ -27,13 +27,13 @@ class HomePage(ttk.Frame):
         lower_button_frame.grid(row=3, column=0, pady=20)
 
         # Lessons-button
-        lessons_button = ttk.Button(
+        self.lessons_button = ttk.Button(
             upper_button_frame,
             text="Lessons",
             style="Custom.TButton",
             command=self.lessons_button_pressed
         )
-        lessons_button.pack(side="left", padx=10)
+        self.lessons_button.pack(side="left", padx=10)
 
         # Reviews-button
         self.reviews_button = ttk.Button(
@@ -71,34 +71,28 @@ class HomePage(ttk.Frame):
         self.user = self.controller.current_user
         self.header.config(text=f"Welcome, {self.user.first_name}")
         self.update_review_amount()
+        self.check_lesson_amount()
 
     def update_review_amount(self):
         reviews = self.controller.get_reviews()
         self.review_amount.config(text=f"Reviews due: {len(reviews)}")
         self.reviews_button.config(state="disabled" if len(reviews) == 0 else "enabled")
 
+    def check_lesson_amount(self):
+        lessons = self.controller.get_unlearned_targets()
+        self.lessons_button.config(state="disabled" if len(lessons) == 0 else "enabled")
+
     def lessons_button_pressed(self):
-        print("Going to Lessons")
+        self.controller.show_frame("AllLessons")
 
     def reviews_button_pressed(self):
         # Update the user in the reviews page
-        reviews_page = self.controller.frames["Reviews"]
-        reviews_page.update_user()
-
         self.controller.show_frame("Reviews")
 
     def modify_button_pressed(self):
         # Update the user in the modify page
-        modify_page = self.controller.frames["ModifyUser"]
-        modify_page.update_user()
-
         self.controller.show_frame("ModifyUser")
 
     def back_button_pressed(self):
         self.controller.current_user = None
-
-        # Refresh the select user page
-        select_page = self.controller.frames["SelectUser"]
-        select_page.refresh_users()
-
         self.controller.show_frame("SelectUser")

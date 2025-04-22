@@ -6,7 +6,9 @@ from databaseHandling.databaseConnectionHandler import DatabaseConnectionHandler
 from databaseHandling.databaseQueryExecutor import DatabaseQueryExecutor
 from databaseHandling.dataMapper import DataMapper
 from databaseHandling.dataWriter import DataWriter
+from targetTypes.conjugation import Conjugation
 from targetTypes.grammarPoint import GrammarPoint
+from targetTypes.word import Word
 from user import User
 from learningProgress import LearningProgress
 
@@ -46,10 +48,7 @@ class DatabaseHandler:
 
     @connect_to_database
     def new_user(self, new_user:User):
-        if self.__data_mapper.check_user_id(new_user.user_id):
-            self.__data_writer.add_user(new_user)
-        else:
-            print("User with ID already exists")
+        self.__data_writer.add_user(new_user)
 
     @connect_to_database
     def change_user(self, changed_user:User):
@@ -75,28 +74,27 @@ class DatabaseHandler:
 
     @connect_to_database
     def get_grammar_phrases(self, grammarpoint:GrammarPoint):
-        from SQLqueries.targetSQL import GET_GRAMMAR_PHRASES
-        phrase_ids = self.__query_executor.execute_query(
-            GET_GRAMMAR_PHRASES, grammarpoint.target_id
-        )
-        result = []
-        for phrase_id in phrase_ids:
-            result.append(self.__data_mapper.map_target_from_id(phrase_id[0]))
+        return self.__data_mapper.get_grammar_phrases(grammarpoint.target_id)
 
-        return result
+    @connect_to_database
+    def get_word_phrases(self, word:Word):
+        return self.__data_mapper.get_word_phrases(word.target_id)
+
+    @connect_to_database
+    def get_grammar_conjugations(self, grammarpoint:GrammarPoint):
+        return self.__data_mapper.get_grammar_conjugations(grammarpoint.target_id)
 
     @connect_to_database
     def get_next_user_id(self):
-        i = 1
-        while True:
-            if self.__data_mapper.check_user_id(i):
-                return i
-            i += 1
+        return self.__data_mapper.next_user_id()
 
     @connect_to_database
-    def delete_user_id(self, user_id):
-        from SQLqueries.writeSQL import DELETE_USER_ID
-        self.__query_executor.execute_query(DELETE_USER_ID, user_id)
+    def get_conjugation_word(self, conjugation:Conjugation):
+        return self.__data_mapper.get_conjugation_word(conjugation.conjugation_id)
+
+    @connect_to_database
+    def delete_user(self, user:User):
+        self.__data_writer.delete_user(user)
 
 
 ## Some testing

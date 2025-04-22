@@ -5,10 +5,10 @@ import datetime
 from target import Target
 
 class LearningProgress:
-    def __init__(self, target:Target, level:int, due_date:datetime.datetime):
+    def __init__(self, target:Target, level:int, due_date:datetime.date):
         self.__target:Target = target
         self.__level = level
-        self.__due_date:datetime.datetime = due_date
+        self.__due_date:datetime.date = due_date
 
     @property
     def target(self):

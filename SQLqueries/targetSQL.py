@@ -22,10 +22,15 @@ JOIN Phrase_Word ON Phrase.TargetID = Phrase_Word.PhraseID
 WHERE Phrase.TargetID = ?"""
 
 GET_WORD_CONJUGATIONS = """
-SELECT Finnish_Translation, Conjugation_Type, Comparison_Degree, Tense, GrammarID
+SELECT Conjugation.ID
 FROM Conjugation
 WHERE Conjugation.WordID = ?;"""
 
+GET_GRAMMAR_CONJUGATIONS = """
+SELECT Conjugation.ID
+FROM Conjugation
+WHERE Conjugation.GrammarID = ?
+"""
 
 GET_NOT_LEARNED_TARGETS = """
 SELECT Target.ID
@@ -41,4 +46,23 @@ SELECT TargetID
 FROM Phrase 
 JOIN Phrase_Grammar ON Phrase.TargetID = Phrase_Grammar.PhraseID
 WHERE Phrase_Grammar.GrammarID = ?
+"""
+
+GET_WORD_PHRASES = """
+SELECT TargetID
+FROM Phrase 
+JOIN Phrase_Word ON Phrase.TargetID = Phrase_Word.PhraseID
+WHERE Phrase_Word.WordID = ?
+"""
+
+GET_CONJUGATION = """
+SELECT Finnish_Translation, Conjugation_Type, Comparison_Degree, Tense, GrammarID
+FROM Conjugation
+WHERE Conjugation.ID = ?
+"""
+
+GET_CONJUGATION_WORD = """
+SELECT Conjugation.WordID
+FROM Conjugation
+WHERE Conjugation.ID = ?
 """

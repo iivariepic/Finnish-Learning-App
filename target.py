@@ -1,6 +1,6 @@
 # File name: target.py
 # Author: Iivari Anttila
-# Description: A class for a target (a thing that can be learned in this app, like a vocabulary targetTypes or a grammar point)
+# Description: A class for a target (a thing that can be learned in this app, like a vocabulary or a grammar point)
 
 class Target:
     def __init__(self,
@@ -24,5 +24,31 @@ class Target:
     def target_id(self):
         return self.__id
 
+    def finnish_translations_string(self):
+        result = ""
+        first_loop: bool = True
+        for translation in self.finnish_translations:
+            if not first_loop:
+                result += ", "
+            else:
+                first_loop = False
+
+            result += translation.capitalize()
+
+        return result
+
+    def english_translations_string(self):
+        result = ""
+        first_loop: bool = True
+        for translation in self.english_translations:
+            if not first_loop:
+                result += ", "
+            else:
+                first_loop = False
+
+            result += translation.capitalize()
+
+        return result
+
     def __str__(self):
-        return f"{self.english_translations[0]} ({self.finnish_translations[0]})"
+        return f"{self.english_translations[0].capitalize()} ({self.finnish_translations[0].capitalize()})"

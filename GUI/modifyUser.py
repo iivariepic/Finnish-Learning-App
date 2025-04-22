@@ -115,12 +115,12 @@ class ModifyUser(ttk.Frame):
         self.id_value_label.config(text=f"{self.id}")
 
     def delete_user(self):
+        self.controller.database.delete_user(self.controller.current_user)
         self.controller.current_user = None
-        self.controller.database.delete_user_id(self.id)
 
         # Refresh the select user page
         select_page = self.controller.frames["SelectUser"]
-        select_page.refresh_users()
+        select_page.update_user()
 
         self.controller.show_frame("SelectUser")
 

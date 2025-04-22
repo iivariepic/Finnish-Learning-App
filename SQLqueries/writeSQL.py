@@ -15,7 +15,7 @@ WHERE User.ID = ?
 
 CREATE_LEARNING_PROGRESS = """
 INSERT INTO Learning_Progress(Next_Due_Date, Level, UserID, TargetID)
-VALUES(?, ?, ?, ?, ?)
+VALUES(?, ?, ?, ?)
 """
 
 UPDATE_LEARNING_PROGRESS = """
@@ -27,4 +27,9 @@ WHERE UserID = ? AND TargetID = ?;
 DELETE_USER_ID = """
 DELETE FROM User
 WHERE User.ID = ?
+"""
+
+DELETE_USER_LEARNING_PROGRESSES = """
+DELETE FROM Learning_Progress
+WHERE Learning_Progress.UserID = ?;
 """

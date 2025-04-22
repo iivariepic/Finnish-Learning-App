@@ -86,7 +86,7 @@ class App(tk.Tk):
             target for target in all_targets if not isinstance(target, Phrase)
         ]
 
-# Testing:
+## Run the program
 if __name__ == "__main__":
     app = App()
     app.mainloop()

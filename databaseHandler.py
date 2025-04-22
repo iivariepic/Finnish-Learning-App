@@ -95,26 +95,3 @@ class DatabaseHandler:
     @connect_to_database
     def delete_user(self, user:User):
         self.__data_writer.delete_user(user)
-
-
-## Some testing
-if __name__ == "__main__":
-    db = DatabaseHandler()
-
-    conflicting_user = User(1, "Iivari")
-    db.new_user(conflicting_user)
-    modification_to_user = User(1, "Iivari2")
-    db.change_user(modification_to_user)
-
-    users = db.form_all_users()
-    for user in users:
-        print(user)
-        for learning_progress in user.learning_progresses:
-            print(learning_progress)
-
-        unlearned = db.get_not_learned_targets(user)
-        print(unlearned)
-
-    modification_to_user = User(1, "Iivari")
-    db.change_user(modification_to_user)
-    print(db.get_next_user_id())

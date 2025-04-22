@@ -3,8 +3,8 @@
 # Description: SQL Queries related to writing data
 
 NEW_USER = """
-INSERT INTO User(ID, First_Name)
-VALUES(?, ?);
+INSERT INTO User(First_Name)
+VALUES(?);
 """
 
 CHANGE_USERNAME = """

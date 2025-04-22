@@ -13,7 +13,7 @@ class DataWriter:
 
     def add_user(self, user:User):
         from SQLqueries.writeSQL import NEW_USER
-        parameters = [user.user_id, user.first_name]
+        parameters = [user.first_name]
         self.query_executor.execute_query(NEW_USER, parameters)
 
     def save_user_changes(self, user:User):

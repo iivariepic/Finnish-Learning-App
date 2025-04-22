@@ -24,8 +24,8 @@ class NewUser(ttk.Frame):
         id_label = ttk.Label(self, text=f"User ID:", font=CONTENT_FONT)
         id_label.grid(row=1, column=0, sticky="e", padx=(50, 5), pady=5)
 
-        id_value_label = ttk.Label(self, text=f"{self.next_id}", font=CONTENT_FONT)
-        id_value_label.grid(row=1, column=1, sticky="w", padx=(5, 50), pady=5)
+        self.id_value_label = ttk.Label(self, text=f"{self.next_id}", font=CONTENT_FONT)
+        self.id_value_label.grid(row=1, column=1, sticky="w", padx=(5, 50), pady=5)
 
         # Username Entry
         entry_label = ttk.Label(self, text="Enter First Name:", font=CONTENT_FONT)
@@ -59,7 +59,9 @@ class NewUser(ttk.Frame):
         )
         self.button_submit.pack(side="left", padx=20)
 
-
+    def update_user(self):
+        self.next_id = self.controller.database.get_next_user_id()
+        self.id_value_label.config(text=str(self.next_id))
 
     def check_entry(self, event=None):
         entry = self.username.get()
